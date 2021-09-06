@@ -14,46 +14,46 @@ public class InputBoton implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		tablero = new Juego();
-		JButton button = (JButton)e.getSource();		
-		String location = button.getName();				
-		char colChar = location.charAt(0);				
-		char rowChar = location.charAt(1);				
-		int col = Character.getNumericValue(colChar);	
-		int row = Character.getNumericValue(rowChar);	
+		JButton boton = (JButton)e.getSource();		
+		String lugarDelBoton = boton.getName();				
+		char charDeColumna = lugarDelBoton.charAt(0);				
+		char charDeFila = lugarDelBoton.charAt(1);				
+		int columna = Character.getNumericValue(charDeColumna);	
+		int fila = Character.getNumericValue(charDeFila);	
 		
-		JButton tempSelected = new JButton();			
-		JButton tempTop = new JButton();				
-		JButton tempLeft = new JButton();				
-		JButton tempRight = new JButton();				
-		JButton tempBottom = new JButton();				
+		JButton botonTemporalSeleccionado = new JButton();			
+		JButton botonTemporalArriba = new JButton();				
+		JButton botonTemporalIzquierda = new JButton();				
+		JButton botonTemporalDerecha = new JButton();				
+		JButton botonTemporalAbajo = new JButton();				
 		
-		tempSelected = tablero.getBotonesDelTablero()[col][row];			
-		tablero.backgroundColor(tempSelected);					
+		botonTemporalSeleccionado = tablero.getBotonesDelTablero()[columna][fila];			
+		tablero.colorDeFondo(botonTemporalSeleccionado);					
 		
 		try {
-			tempTop = tablero.getBotonesDelTablero()[col-1][row];			
-			tablero.backgroundColor(tempTop);				
+			botonTemporalArriba = tablero.getBotonesDelTablero()[columna-1][fila];			
+			tablero.colorDeFondo(botonTemporalArriba);				
 		}
 		catch(ArrayIndexOutOfBoundsException i) {
 			
 		}
 		try {
-			tempLeft = tablero.getBotonesDelTablero()[col][row-1];			
-			tablero.backgroundColor(tempLeft);	
+			botonTemporalIzquierda = tablero.getBotonesDelTablero()[columna][fila-1];			
+			tablero.colorDeFondo(botonTemporalIzquierda);	
 		}
 		catch(ArrayIndexOutOfBoundsException i) {
 			
 		}
 		try {
-			tempRight = tablero.getBotonesDelTablero()[col][row+1];	
-			tablero.backgroundColor(tempRight);					
+			botonTemporalDerecha = tablero.getBotonesDelTablero()[columna][fila+1];	
+			tablero.colorDeFondo(botonTemporalDerecha);					
 		}
 		catch(ArrayIndexOutOfBoundsException i) {
 			
 		}
 		try {
-			tempBottom = tablero.getBotonesDelTablero()[col+1][row];	
-			tablero.backgroundColor(tempBottom);				
+			botonTemporalAbajo = tablero.getBotonesDelTablero()[columna+1][fila];	
+			tablero.colorDeFondo(botonTemporalAbajo);				
 		}
 		catch(ArrayIndexOutOfBoundsException i) {
 			

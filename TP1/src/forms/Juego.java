@@ -43,7 +43,7 @@ public class Juego extends JFrame {
 				System.out.println("Fila: " + j);
 				JButton nuevoBoton = new JButton();
 				botonesDelTablero[i][j] = nuevoBoton;
-				nuevoBoton.setName(""+i+j);
+				nuevoBoton.setName("" + i + j);
 				nuevoBoton.setBackground(Color.black);
 				nuevoBoton.addActionListener(new InputBoton());	
 				panelDelTablero.add(nuevoBoton);
@@ -59,11 +59,11 @@ public class Juego extends JFrame {
 		return botonesDelTablero;
 	}
 	
-	public void backgroundColor(JButton b)
+	public void colorDeFondo(JButton b)
 	{
-		if(b.getBackground()==Color.BLACK)			//the button b is black, then it is changed to yellow, otherwise it is
-		{											//changed to black.
-			b.setBackground(Color.YELLOW);
+		if(b.getBackground()==Color.BLACK)
+		{									
+			b.setBackground(Color.WHITE);
 		}
 		else
 		{
