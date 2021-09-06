@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 
 import controls.InputBoton;
 
+/*
+ * Intefaz del juego, tal vez podamos arreglar esto un poco para separar mejor
+ */
 
 @SuppressWarnings("serial")
 public class Juego extends JFrame {

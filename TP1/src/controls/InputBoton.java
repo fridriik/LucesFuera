@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import forms.Juego;
 
+/*
+ * Intento de tocar botones, se nota que no sale muy bien porque falta lo aleatorio y el cambio de colores!
+ */
 
 public class InputBoton implements ActionListener{
 	
