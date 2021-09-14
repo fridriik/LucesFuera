@@ -3,16 +3,21 @@ package vistas;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.sound.sampled.Clip;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import comportamiento.Flow;
+import externalMedia.JMusic;
 
 @SuppressWarnings("serial")
 public class Tablero extends JFrame {
@@ -20,20 +25,30 @@ public class Tablero extends JFrame {
 	private JButton[][] botonesDelTablero;
 	private JPanel panelDelTablero, panelDePuntaje;
 	private JLabel cartelMovimientos;
+	public static int cantMovimientos;
+	private Clip sonidoBoton = JMusic.cargarSonido("externalMedia/boton.wav");
 
+	
 	/**
 	 * Constructor del tablero y botones
 	 */
 	public Tablero() {
+		
 		setTitle("Luces Fuera!");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Creamos un panel para poder colocar el Label de movimientos y organizarlo junto a la matriz de botones
-		panelDePuntaje = new JPanel();
-		panelDePuntaje.setLayout(new GridLayout(1, 1));
-		panelDePuntaje.add(cartelMovimientos = new JLabel());
-		cartelMovimientos.setText("Movimientos: " + "-");
-		getContentPane().add(panelDePuntaje, BorderLayout.NORTH);
+		try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/externalMedia/ARCADEPI.ttf"));
+            panelDePuntaje = new JPanel();
+            panelDePuntaje.setLayout(new GridLayout(1, 1));
+            panelDePuntaje.add(cartelMovimientos = new JLabel());
+            cartelMovimientos.setText("MOVIMIENTOS: " + "-");
+            cartelMovimientos.setFont(font.deriveFont(Font.PLAIN, 14f));
+            getContentPane().add(panelDePuntaje, BorderLayout.NORTH);
+		} catch (IOException | FontFormatException ex) {
+            ex.printStackTrace();
+        }
 		
 		//Creamos una matrtiz para botones
 		botonesDelTablero = new JButton[Flow.columnas][Flow.filas];
@@ -57,13 +72,14 @@ public class Tablero extends JFrame {
 			}
 		}
 		
-		//Random para calcular debajo los valores con los que tendriamos que cambiar los colores de los botones
+		//Random para los botones y su posicion en el tablero
 		Random aleatorioParaColor = new Random();
 		for (JButton[] col : botonesDelTablero) {
 			for (JButton boton : col) {
 				boolean temp = aleatorioParaColor.nextBoolean();
 				if (temp) {
 					boton.doClick();
+					cantMovimientos = -1;
 				}
 			}
 		}
@@ -74,18 +90,20 @@ public class Tablero extends JFrame {
 		setVisible(true);
 	}
 
+	
 	/**
 	 * Metodo que se utiliza para el cambio de colores de los botones
 	 * @param boton
 	 */
-	private void cambiarColor(JButton button) {
-		if (button.getBackground().equals(Color.black)) {
-			button.setBackground(Color.magenta);
+	private void cambiarColor(JButton boton) {
+		if (boton.getBackground().equals(Color.black)) {
+			boton.setBackground(Color.magenta);
 		} 
 		else {
-		button.setBackground(Color.black);
+		boton.setBackground(Color.black);
 		}
 	}
+	
 	
 	/**
 	 * Metodo que verifica si todos los botones de la matriz son del color ganador
@@ -102,12 +120,15 @@ public class Tablero extends JFrame {
 	}
 	
 	
+	//Implementamos los listener para las acciones de los botones del tablero y que responda a lo que pide el juego
 	public class Input implements ActionListener {
-	
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Flow.cantMovimientos++;
-			cartelMovimientos.setText("Movimientos: " + Flow.cantMovimientos);
+			cantMovimientos++;
+			cartelMovimientos.setText("Movimientos: " + cantMovimientos);
+			if(cantMovimientos > 0) {
+				sonidoBoton.loop(1);
+			}
 			boolean flag = false;
 			int columna = 0;
 			int filas = 0;
@@ -123,7 +144,7 @@ public class Tablero extends JFrame {
 				if (flag) {
 					break;
 				}
-			}
+			}			
 			cambiarColor(botonesDelTablero[columna][filas]);
 			if (columna > 0) {
 				cambiarColor(botonesDelTablero[columna - 1][filas]);
