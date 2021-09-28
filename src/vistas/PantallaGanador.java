@@ -39,7 +39,7 @@ public class PantallaGanador extends JFrame{
 	
 	public PantallaGanador() {
 		
-		setTitle("Fin del juego!");
+		setTitle("Fin del juego");
 		setSize(500, 500);
 		setBounds(500, 200, 500, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
